@@ -1,10 +1,9 @@
 {
-    "name":"pomelo-admin",
+    "name":"pomelo-admin-web",
     "version":"0.0.1",
     "private":false,
     "dependencies":{
-        "express": ">=0.0.1", 
-        "jade": ">=0.0.1"
+        "express": ">=0.0.1"
     }
 }
 
