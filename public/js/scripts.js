@@ -98,6 +98,7 @@ Ext.onReady(function(){
 		}]
 	});
 
+	list();
 	new Ext.Viewport({
 		layout: 'border',
 		items: [runScriptPanel]
@@ -230,4 +231,3 @@ var save = function(){
 	});
 };
 
-list();

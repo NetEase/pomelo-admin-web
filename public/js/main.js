@@ -80,10 +80,10 @@ Ext.onReady(function() {
 					return;
 				}
 				if (id === 'profiler') {
-					var url = './front/inspector.html?host='
+					var url = '/front/inspector.html?host='
 						+ window.location.hostname + ':2337&page=0';
 				} else {
-					var url = './html/' + id + '.html';
+					var url = '/module/' + id + '.html';
 				}
 				addIframe(title, url, id);
 

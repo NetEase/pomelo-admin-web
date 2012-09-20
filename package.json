@@ -3,7 +3,8 @@
     "version":"0.0.1",
     "private":false,
     "dependencies":{
-        "express": ">=0.0.1"
+        "express": ">=0.0.1", 
+        "ejs": ">=0.0.1"
     }
 }
 
