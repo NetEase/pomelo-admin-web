@@ -1,4 +1,5 @@
 var express = require('express');
+var config = require('./config/admin');
 
 var app = express();
 
@@ -32,7 +33,7 @@ app.on('error', function(err) {
 });
 
 app.get('/', function(req, resp) {
-	resp.render('index');
+	resp.render('index', config);
 });
 
 app.get('/module/:mname', function(req, resp) {
