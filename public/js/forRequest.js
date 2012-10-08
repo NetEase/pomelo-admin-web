@@ -16,6 +16,20 @@ Ext.onReady(function(){
         }
     }
 });
+    var serverStore = Ext.create('Ext.data.Store', {
+		fields: ['name', 'serverID']
+	});
+
+    var serverCom = Ext.create('Ext.form.ComboBox', {
+		id:'serverComId', 
+		fieldLabel: 'Server',
+		labelWidth: 60,
+		store: serverStore,
+		queryMode: 'local',
+		displayField: 'serverID',
+		valueField: 'name'
+	});
+
 /**
  * gridPanel,detail message
  */
@@ -42,7 +56,7 @@ var forGrid=Ext.create('Ext.grid.Panel', {
 		 	name:'numberfield',
 		 	id:'numberfieldId',
 		 	anchor: '100%',
-		 	value: 50,
+		 	value: 10,
         	maxValue: 1000,
         	minValue: 0,
 		 	width:100
@@ -56,7 +70,8 @@ var forGrid=Ext.create('Ext.grid.Panel', {
 		 	xtype:'button',
 		 	text:'refresh',
 		 	handler:refresh
-		 }
+		 },
+		 serverCom
 		]
 });
 forGrid.addListener('itemdblclick', function(forGrid, rowindex, e){
@@ -103,29 +118,75 @@ var viewport=new Ext.Viewport({
 	    layout:'border',
 	    items:[forGrid,countGrid]
 	});
+	refresh();
 });
 
-	socket.on('connect',function(){
-		var number=Ext.getCmp('numberfieldId').getValue() ;
-		socket.emit('announce_web_client');
-		socket.emit('webMessage',{method:'getForLog',number:number,logfile:'for-log'});	
-		// socket.emit('announce_web_client');
-		// socket.emit('for-log',{number:number,logfile:'for-log'});
-		socket.on('for-log',function(msg){ 
-		// alert('data length:'+data.length+';conLogData length:'+conLogData.length);
-	   Ext.getCmp('forGridId').getStore().loadData(msg.data);
-       Ext.getCmp('countGridId').getStore().loadData(msg.countData);
-       
-	  });
-	});
-
-//refresh conGrid's data
 function refresh(){
-	var number=Ext.getCmp('numberfieldId').getValue() ;
-	socket.emit('webMessage',{method:'getForLog',number:number,logfile:'for-log'});	
-
-}
+	var number = Ext.getCmp('numberfieldId').getValue();
+	var serverId = Ext.getCmp('serverComId').getValue();
+	console.log(number);
+	console.log(serverId)
+	if(!number || !serverId){
+		list();
+		return;
+	}
+   window.parent.client.request('monitorLog', {number:number,logfile:'for-log',serverId:serverId} , function(err, msg) {
+    if(err) {
+      console.error('fail to request forwardLog info:');
+      console.error(err);
+      return;
+    }
+    console.log(msg);
+ 
+    // compose display data
+    var data = [];
+    /*for(var id in msg) {
+    	for(var i=0;i<msg[id].length;i++){
+    		data.push({
+		      	serverId : id,
+		      	name : msg[id][i]['name'],
+		      	kindName : msg[id][i]['kindName'],
+		      	position : '('+msg[id][i].x+','+msg[id][i].y+')'
+		    });
+    	}
+    }*/
+    var _msg = msg.body.dataArray;
+    for(var i=0;i<_msg.length;i++){
+    	data.push({
+    		time : _msg[i].time,
+    		serverId : _msg[i].serverId,
+    		route : _msg[i].route,
+    		timeUsed : _msg[i].timeUsed,
+    		params : _msg[i].params
+    	});
+    }
+    var store = Ext.getCmp('forGridId').getStore();
+    store.loadData(data);
+    list();
+  });
+}	
 	
+var list = function() {
+	window.parent.client.request('scripts', {command: 'list'}, function(err, msg) {
+		if(err) {
+			alert(err);
+			return;
+		}
+		console.log(msg);
+		var servers = [], scripts = [], i, l, item;
+		for(i=0, l=msg.servers.length; i<l; i++) {
+			item = msg.servers[i];
+			servers.push({name: item, serverID: item});
+		}
+
+		servers.sort(function(o1, o2) {
+			return o1.name.localeCompare(o2);
+		});
+
+		Ext.getCmp('serverComId').getStore().loadData(servers);
+		//Ext.getCmp('scriptComId').getStore().loadData(scripts);
+	});
+};	
 	
 	
 	
