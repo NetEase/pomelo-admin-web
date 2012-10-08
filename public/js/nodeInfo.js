@@ -60,7 +60,9 @@ Ext.onReady(function(){
 		items:[nodesPanel,chartPanel]
 	});
 
+  refresh();
 });
+/*
 socket.on('connect',function(){
      socket.emit('announce_web_client');
      socket.emit('webMessage',{method:'getProcessInfo'});
@@ -70,7 +72,22 @@ socket.on('connect',function(){
     store.loadData(msg.data);
      });
 });
+*/
 function refresh(){
-   socket.emit('webMessage',{method:'getProcessInfo'});
+   window.parent.client.request('nodeInfo', null, function(err, msg) {
+    if(err) {
+      console.error('fail to request node info:');
+      console.error(err);
+      return;
+    }
+
+    // compose display data
+    var data = [];
+    for(var id in msg) {
+      data.push(msg[id]);
+    }
+    var store = Ext.getCmp('nodesPanel').getStore();
+    store.loadData(data);
+  });
 }
 

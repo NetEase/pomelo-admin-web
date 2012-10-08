@@ -15,7 +15,6 @@ Ext.onReady(function() {
 				text : 'systemInfo',
 				leaf : true
 			}, 
-			/*
 			{
 				id : 'nodeInfo',
 				text : 'nodeInfo',
@@ -49,7 +48,7 @@ Ext.onReady(function() {
 				id : 'sceneInfo',
 				text : 'sceneInfo',
 				leaf : true
-			}, */
+			}, 
 			{
 				id : 'scripts',
 				text : 'scripts',

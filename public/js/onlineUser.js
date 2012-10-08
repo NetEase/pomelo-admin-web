@@ -73,8 +73,17 @@ setInterval(function() {
 			info = msg[sid];
 			totalConnCount += msg[sid].totalConnCount;
 			loginedCount += msg[sid].loginedCount;
-			list.concat(msg[sid].loginedList);
-		}
+			var lists = msg[sid].loginedList;
+			for(var i=0;i<lists.length;i++){
+				list.push({
+					address : lists[i].address,
+					serverId : sid,
+					username : lists[i].username,
+					loginTime : lists[i].loginTime,
+					uid : lists[i].uid
+				});
+			}
+		}	
 
 		contentUpdate(totalConnCount, loginedCount);
 

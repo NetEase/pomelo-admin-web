@@ -39,28 +39,36 @@ var viewport=new Ext.Viewport({
 	    layout:'border',
 	    items:[sceneGrid]
 	});
+	refresh();
 });
 
-var STATUS_INTERVAL = 60 * 1000; // 60 seconds
-	socket.on('connect',function(){
-		socket.emit('announce_web_client');
-		socket.emit('webMessage',{method:'getSenceInfo'});
-		socket.on('getSenceInfo',function(msg){ 
-		if(msg==null){
-			return;
-		} 
-	   var store=Ext.getCmp('sceneGridId').getStore();
-       store.loadData(msg.data);
-	  });
-	});
 function refresh(){
-	socket.emit('webMessage',{method:'getSenceInfo'});
-}
+   window.parent.client.request('sceneInfo', null, function(err, msg) {
+    if(err) {
+      console.error('fail to request scene info:');
+      console.error(err);
+      return;
+    }
+    console.log(msg);
+ 
+    // compose display data
+    var data = [];
+    for(var id in msg) {
+    	for(var i=0;i<msg[id].length;i++){
+    		data.push({
+		      	serverId : id,
+		      	name : msg[id][i]['name'],
+		      	kindName : msg[id][i]['kindName'],
+		      	position : '('+msg[id][i].x+','+msg[id][i].y+')'
+		    });
+    	}
+    }
+    var store = Ext.getCmp('sceneGridId').getStore();
+    store.loadData(data);
+  });
+}	
 	
-	
-	
-	
-	
+
 	
 	
 	
