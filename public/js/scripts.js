@@ -61,25 +61,19 @@ Ext.onReady(function(){
 			anchor: '95%',
 			border: false,
 			items:[{
-				xtype: 'label',
-				text: '.',
-				columnWidth: 0.78
-			}, {
 				// colspan: 2
 				xtype:'button',
 				text: 'Run',
 				handler: run,
-				columnWidth: 0.08
-			}, {
-				xtype: 'label',
-				text: '.',
-				columnWidth: 0.06
-			}, {
+				width: 150,
+				margin: '10 0 10 900'
+			},{
 				// colspan: 2
 				xtype:'button',
 				text:'Save',
 				handler: saveForm,
-				columnWidth:0.08
+				width:150,
+				margin: '10 0 10 100'
 			}]
 		}, {
 			xtype:'label',
