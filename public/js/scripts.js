@@ -82,13 +82,9 @@ Ext.onReady(function(){
 		}, {
 			xtype: 'textareafield',
 			id: 'tesultTextId',
-			height: 150,
+			height: 350,
 			name: 'scriptId',
 			anchor: '95%'
-		}, {
-			id: 'runtimeId',
-			html: 'runtime:',
-			border:false
 		}]
 	});
 
