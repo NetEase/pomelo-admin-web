@@ -110,6 +110,5 @@ var refresh = function(){
 var contentUpdate = function(system, cpu, start_time){
     document.getElementById("system").innerHTML = system;
     document.getElementById("cpu").innerHTML = cpu;
-//    document.getElementById("io").innerHTML=io;
     document.getElementById("start_time").innerHTML = start_time;
 };

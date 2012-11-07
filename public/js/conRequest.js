@@ -95,13 +95,7 @@ var countGrid=Ext.create('Ext.grid.Panel',{
 });
 var viewport=new Ext.Viewport({
 	    layout:'border',
-	    items:[
-	    // {
-	    //  region:'south',
-     //     height:30,
-     //     contentEl:countId
-	    // },
-	    conGrid,countGrid]
+	    items:[conGrid,countGrid]
 	});
 
 conGrid.addListener('itemdblclick', function(conGrid, rowindex, e){
@@ -122,8 +116,6 @@ conGrid.addListener('itemdblclick', function(conGrid, rowindex, e){
 function refresh(){
 	var number = Ext.getCmp('numberfieldId').getValue();
 	var serverId = Ext.getCmp('serverComId').getValue();
-	console.log(number);
-	console.log(serverId)
 	if(!number || !serverId){
 		list();
 		return;
@@ -134,20 +126,9 @@ function refresh(){
       console.error(err);
       return;
     }
-    console.log(msg);
  
     // compose display data
     var data = [];
-    /*for(var id in msg) {
-    	for(var i=0;i<msg[id].length;i++){
-    		data.push({
-		      	serverId : id,
-		      	name : msg[id][i]['name'],
-		      	kindName : msg[id][i]['kindName'],
-		      	position : '('+msg[id][i].x+','+msg[id][i].y+')'
-		    });
-    	}
-    }*/
     var _msg = msg.body.dataArray;
     for(var i=0;i<_msg.length;i++){
     	data.push({
@@ -169,7 +150,6 @@ var list = function() {
 			alert(err);
 			return;
 		}
-		console.log(msg);
 		var servers = [], scripts = [], i, l, item;
 		for(i=0, l=msg.servers.length; i<l; i++) {
 			item = msg.servers[i];
@@ -181,6 +161,5 @@ var list = function() {
 		});
 
 		Ext.getCmp('serverComId').getStore().loadData(servers);
-		//Ext.getCmp('scriptComId').getStore().loadData(scripts);
 	});
 };	

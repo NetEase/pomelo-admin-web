@@ -14,7 +14,8 @@
 			var host = '<%= host %>';
 			var port = <%= port %>;
 			var client = window.client = new ConsoleClient();
-			client.connect('chang', host, port, function(err){
+			// TODO: add login logic
+			client.connect('browser-' + Date.now(), host, port, function(err){
 				if(err) {
 					console.error('fail to connect to admin console server:');
 					console.error(err);

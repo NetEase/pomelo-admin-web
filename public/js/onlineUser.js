@@ -67,7 +67,6 @@ setInterval(function() {
 			return;
 		}
 
-		console.log(msg);
 		var totalConnCount = 0, loginedCount = 0, info, list = [];
 		for(var sid in msg) {
 			info = msg[sid];
@@ -79,7 +78,7 @@ setInterval(function() {
 					address : lists[i].address,
 					serverId : sid,
 					username : lists[i].username,
-					loginTime : lists[i].loginTime,
+					loginTime : new Date(lists[i].loginTime),
 					uid : lists[i].uid
 				});
 			}
