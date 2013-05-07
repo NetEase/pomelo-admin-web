@@ -6,10 +6,10 @@ $toolbar-inner-border-width: 1px 0px 0px !default;
 $toolbar-inner-border-color: lighten($toolbar-background-color, 5%) !default;
 
 //margins
-$toolbar-horizontal-spacing: 2px;
-$toolbar-vertical-spacing: 2px;
-$toolbar-footer-horizontal-spacing: 6px;
-$toolbar-footer-vertical-spacing: 2px;
+$toolbar-horizontal-spacing: 2px !default;
+$toolbar-vertical-spacing: 2px !default;
+$toolbar-footer-horizontal-spacing: 6px !default;
+$toolbar-footer-vertical-spacing: 2px !default;
 
 //border
 $toolbar-border-color: $panel-body-border-color !default;

@@ -164,7 +164,8 @@
 
             $ui-body-color: $panel-body-color,
             $ui-body-border-color: $panel-body-border-color,
-            $ui-body-border-width: 1px,
+            // 没有panel-body-border-width配置选项
+            $ui-body-border-width: 0 1px 1px 0,
             $ui-body-background-color: $panel-body-background-color
         );
         

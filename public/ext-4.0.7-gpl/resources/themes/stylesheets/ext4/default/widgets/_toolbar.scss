@@ -110,7 +110,7 @@
         'default',
         $background-color: $toolbar-background-color,
         $background-gradient: $toolbar-background-gradient,
-        $border-color: $toolbar-border-color
+        $border-color:#fff $toolbar-border-color $toolbar-border-color $toolbar-border-color
     );
     
     //plain toolbars have no border
