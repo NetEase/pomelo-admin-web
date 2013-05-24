@@ -14,7 +14,7 @@ Ext.onReady(function() {
 				id : 'systemInfo',
 				text : 'systemInfo',
 				leaf : true
-			}, 
+			},
 			{
 				id : 'nodeInfo',
 				text : 'nodeInfo',
@@ -43,25 +43,25 @@ Ext.onReady(function() {
 				id : 'onlineUser',
 				text : 'onlineUser',
 				leaf : true
-			}, 
+			},
 			{
 				id : 'sceneInfo',
 				text : 'sceneInfo',
 				leaf : true
-			}, 
+			},
 			{
 				id : 'scripts',
 				text : 'scripts',
 				leaf : true
-			}, {
+			}/*, {
 				id : 'profiler',
 				text : 'profiler',
 				leaf : true
-			}
+			}*/
 			]
 		}
 	});
-			
+
 	// admin consle menu----------------------------------------------------
 	var westpanel = Ext.create('Ext.tree.Panel', {
 		title : 'Menu',
