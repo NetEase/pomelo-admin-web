@@ -215,9 +215,9 @@ Ext.onReady(function() {
             xtype: 'label',
             text: 'Chart:',
             margin: '10 0 0 10',
-            columnWidth: .10,
-            labelWidth: 60,
-            font: '18px'
+            //columnWidth: .10,
+            //labelWidth: 60,
+            //font: '18px'
           },
           serverCom, yaxisCom, intervalCom, {
             xtype: 'button',
@@ -329,6 +329,7 @@ function refresh() {
     var yAxis = _chart.axes.get(0);
     for (var id in msg) {
       cacheNodeInfo[id] = cacheNodeInfo[id] || [];
+      msg[id] = msg[id] || {};
       msg[id]['time'] = new Date();
       cacheNodeInfo[id].push(msg[id]);
       data.push(msg[id]);
