@@ -9,6 +9,7 @@ var _intervalId = "";
 var _chart = null;
 var _vsz = 0;
 var _rss = 0;
+var _cpuavg = 0;
 var seed = 0;
 var _store1 = null;
 
@@ -250,17 +251,27 @@ function reloadHandler() {
   }
   _serverId = Ext.getCmp('serverComId').getValue();
   _yaxisId = Ext.getCmp('yaxisComId').getValue();
-  _vsz = 0;
-  _rss = 0;
+  //_vsz = 0;
+  //_rss = 0;
+  //_cpuavg = 0;
   var __data = [];
 
   var cache = cacheNodeInfo[_serverId] || [];
+
+  if (_yaxisId === 'cpu%') {
+    _yaxisId = 'cpuAvg';
+  }
+
+  if (_yaxisId === 'mem%') {
+    _yaxisId = 'memAvg';
+  }
 
   for (var i = 0; i < cache.length; i++) {
     __data.push({
       data1: parseFloat(cache[i][_yaxisId]),
       data2: new Date(cache[i]['time'])
     });
+
     if (_yaxisId === 'vsz') {
       if (cache[i][_yaxisId] > _vsz) {
         _vsz = cache[i][_yaxisId];
@@ -272,13 +283,12 @@ function reloadHandler() {
         _rss = cache[i][_yaxisId];
       }
     }
-  }
-  if (_yaxisId === 'cpu%') {
-    _yaxisId = 'cpuAvg';
-  }
 
-  if (_yaxisId === 'mem%') {
-    _yaxisId = 'memAvg';
+    if (_yaxisId === 'cpuAvg') {
+      if (cache[i][_yaxisId] > _cpuavg) {
+        _cpuavg = cache[i][_yaxisId];
+      }
+    }
   }
 
   var timeAxis = _chart.axes.get(1);
@@ -294,6 +304,11 @@ function reloadHandler() {
   if (_yaxisId === 'rss') {
     yAxis.maximum = _rss;
   }
+
+  if (_yaxisId === 'cpuAvg') {
+    yAxis.maximum = _cpuavg;
+  }
+
   console.log(yAxis.maximum);
   timeAxis.step = [Ext.Date.MINUTE, _intervalId];
   timeAxis.toDate = new Date(timeAxis.fromDate.getTime() + _intervalId * 10 * 60 * 1000);
@@ -311,6 +326,7 @@ function refresh() {
 
     // compose display data
     var data = [];
+    var yAxis = _chart.axes.get(0);
     for (var id in msg) {
       cacheNodeInfo[id] = cacheNodeInfo[id] || [];
       msg[id]['time'] = new Date();
@@ -320,12 +336,20 @@ function refresh() {
     var store = Ext.getCmp('nodesPanel').getStore();
     var cache = cacheNodeInfo[_serverId] || [];
     var __data = [];
-
+    var flag = 0;
     for (var i = 0; i < cache.length; i++) {
+      var _t = parseFloat(cache[i][_yaxisId]);
+      if (_t > yAxis.maximum) {
+        yAxis.maximum = _t;
+        flag = 1;
+      }
       __data.push({
-        data1: parseFloat(cache[i][_yaxisId]),
+        data1: _t,
         data2: new Date(cache[i]['time'])
       });
+    }
+    if (flag) {
+      _chart.redraw();
     }
     console.log('refresh %j', __data);
     store1.loadData(__data);
