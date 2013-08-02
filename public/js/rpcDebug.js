@@ -126,33 +126,6 @@ Ext.onReady(function(){
         }]
     });
     refreshDate();
-
-    var startDate = new Ext.form.DateField({
-                fieldLabel : '开始日期',
-                emptyText : '请选择',
-                disabledDays : [1, 2, 5],//将星期一,二,五禁止.数值为0-6,0为星期日,6为星期六
-                labelWidth : 100,
-                readOnly : true,
-                allowBlank : false,
-                format : 'Y-m-d',//日期格式
-                name : 'startdt',
-                id : 'startdt',
-                vtype : 'daterange',//daterange类型为上代码定义的类型
-                endDateField : 'endDate'//必须跟endDate的id名相同
-            })
-    var endDate = new Ext.form.DateField({
-                fieldLabel : '结束日期',
-                emptyText : '请选择',
-                disabledDays : [1, 2, 5],//将星期一,二,五禁止.数值为0-6,0为星期日,6为星期六
-                readOnly : true,
-                allowBlank : false,
-                format : 'Y-m-d',//日期格式
-                name : 'enddt',
-                id : 'endDate',
-                vtype : 'daterange',//daterange类型为上代码定义的类型
-                startDateField : 'startdt'//必须跟startDate的id名相同
-            })
-
 });
 
 function refreshDate() {
