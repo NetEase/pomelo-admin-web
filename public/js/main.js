@@ -49,6 +49,10 @@ Ext.onReady(function() {
 				id: 'scripts',
 				text: 'Scripts',
 				leaf: true
+			}, {
+				id: 'rpcDebug',
+				text: 'RPC Debug',
+				leaf: true
 			}/*, {
 				id: 'profiler',
 				text: 'Profiler',
