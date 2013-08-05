@@ -13,7 +13,13 @@
 		<script>
 			var host = '<%= host %>';
 			var port = <%= port %>;
-			var client = window.client = new ConsoleClient();
+			var username = '<%= username %>';
+			var password = '<%= password %>';
+			var client = window.client = new ConsoleClient({
+				username: username,
+				password: password,
+				md5: false
+			});
 			// TODO: add login logic
 			client.connect('browser-' + Date.now(), host, port, function(err){
 				if(err) {
@@ -23,6 +29,10 @@
 				} else {
 					console.info('admin console connected.');
 				}
+
+				client.command("list", null, null, function(err, res){
+					console.log(res);
+				});
 			});
 			console.log(window.client);
 		</script>
