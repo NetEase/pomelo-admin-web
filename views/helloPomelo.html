@@ -9,7 +9,7 @@
 	<body>
 		<div id = 'main'></div>
 		<script type="text/javascript">
-			var client = window.client = new ConsoleClient();
+			var client = window.client = new ConsoleClient({username: 'admin', password: 'admin'});
 			var host = 'localhost';
 			var port = '3005';
 			client.connect('xxx', host, port, function(err){
